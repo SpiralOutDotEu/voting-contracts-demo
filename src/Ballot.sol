@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
+import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+
 contract Ballot {
     bytes32 public merkleRoot;
     mapping(address => bool) public hasVoted;
@@ -24,7 +26,8 @@ contract Ballot {
     }
 
     function isValidVoter(address voter, bytes32[] memory proof) public view returns (bool) {
-        // TODO: add implementation
+        bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(voter))));
+        require(MerkleProof.verify(proof, merkleRoot, leaf), "Invalid proof");
         return true; 
     }
 
