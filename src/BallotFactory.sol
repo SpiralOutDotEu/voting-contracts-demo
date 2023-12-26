@@ -11,8 +11,8 @@ contract BallotFactory is Ownable {
 
     event BallotCreated(address ballotAddress);
 
-    function createBallot(bytes32 root) public onlyOwner {
-        Ballot newBallot = new Ballot(root);
+    function createBallot(bytes32 root, string memory text) public onlyOwner {
+        Ballot newBallot = new Ballot(root, text);
         ballots.push(newBallot);
         emit BallotCreated(address(newBallot));
     }
